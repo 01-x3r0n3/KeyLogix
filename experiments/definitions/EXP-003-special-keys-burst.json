@@ -1,0 +1,47 @@
+{
+  "schema": "keylogix.experiment.v1",
+  "experiment_id": "EXP-003-special-keys-burst",
+  "objective": "Measure behavioral analysis response to rapid burst input and repeated keystrokes.",
+  "procedure": [
+    "Emit rapid sequence of 6 key-down events with 10ms intervals meeting burst threshold.",
+    "Emit 3 repeated key-downs of identical key code (VK_A).",
+    "Verify burst_count >= 1 and max_repeat_run >= 3 in behavioral analysis."
+  ],
+  "configuration": {
+    "associate_context": true
+  },
+  "input": {
+    "type": "synthetic",
+    "default_application": "lab_target.exe",
+    "default_window": "Target Window",
+    "script": [
+      { "action": "key", "key_code": 65, "event_type": "KEY_DOWN" },
+      { "action": "delay", "ns": 10000000 },
+      { "action": "key", "key_code": 65, "event_type": "KEY_DOWN" },
+      { "action": "delay", "ns": 10000000 },
+      { "action": "key", "key_code": 65, "event_type": "KEY_DOWN" },
+      { "action": "delay", "ns": 10000000 },
+      { "action": "key", "key_code": 66, "event_type": "KEY_DOWN" },
+      { "action": "delay", "ns": 10000000 },
+      { "action": "key", "key_code": 67, "event_type": "KEY_DOWN" },
+      { "action": "delay", "ns": 10000000 },
+      { "action": "key", "key_code": 68, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 65, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 65, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 65, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 66, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 67, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 68, "event_type": "KEY_UP" }
+    ]
+  },
+  "expected_observation": {
+    "status": "SUCCESS_WITH_DATA",
+    "raw_count": 12,
+    "burst_count": 1,
+    "max_repeat_run": 3
+  },
+  "limitations": [
+    "Timing is simulated via SyntheticClock interval steps.",
+    "Burst detection is a heuristic research measurement and not an assertion of malice."
+  ]
+}

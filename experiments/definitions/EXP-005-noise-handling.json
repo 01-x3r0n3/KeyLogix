@@ -1,0 +1,32 @@
+{
+  "schema": "keylogix.experiment.v1",
+  "experiment_id": "EXP-005-noise-handling",
+  "objective": "Verify failure semantics and robustness when handling noise, out-of-range keys, and invalid actions.",
+  "procedure": [
+    "Inject a synthetic stream containing valid keystrokes interleaved with invalid actions and out-of-range VK codes.",
+    "Verify pipeline yields PARTIAL status and records individual failures without crashing.",
+    "Verify valid events continue to be normalized and analyzed."
+  ],
+  "configuration": {
+    "associate_context": false
+  },
+  "input": {
+    "type": "synthetic",
+    "script": [
+      { "action": "key", "key_code": 65, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 65, "event_type": "KEY_UP" },
+      { "action": "invalid_action", "data": 123 },
+      { "action": "key", "key_code": 999, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 66, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 66, "event_type": "KEY_UP" }
+    ]
+  },
+  "expected_observation": {
+    "status": "PARTIAL",
+    "normalized_count": 4,
+    "failure_count": 2
+  },
+  "limitations": [
+    "Tests software-level input validation only; does not simulate hardware input corruption."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "keylogix.experiment.v1",
+  "experiment_id": "EXP-002-context-timeline",
+  "objective": "Study context transitions during simulated window switching across applications.",
+  "procedure": [
+    "Emit keystrokes in initial application context (notepad.exe).",
+    "Simulate application context switch to cmd.exe.",
+    "Emit further keystrokes in new context.",
+    "Verify pipeline detects and counts context transition in behavioral summary."
+  ],
+  "configuration": {
+    "associate_context": true
+  },
+  "input": {
+    "type": "synthetic",
+    "script": [
+      { "action": "context", "application": "notepad.exe", "window_title": "Notes.txt - Notepad" },
+      { "action": "key", "key_code": 65, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 65, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 66, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 66, "event_type": "KEY_UP" },
+      { "action": "context", "application": "cmd.exe", "window_title": "Command Prompt" },
+      { "action": "key", "key_code": 68, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 68, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 73, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 73, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 82, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 82, "event_type": "KEY_UP" }
+    ]
+  },
+  "expected_observation": {
+    "status": "SUCCESS_WITH_DATA",
+    "raw_count": 10,
+    "normalized_count": 10,
+    "context_changes": 1
+  },
+  "limitations": [
+    "Simulated context transitions; does not capture live Win32 window focus events.",
+    "No OS-level process introspection on Linux analysis host."
+  ]
+}

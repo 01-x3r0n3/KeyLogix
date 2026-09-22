@@ -1,0 +1,26 @@
+{
+  "schema": "keylogix.experiment.v1",
+  "experiment_id": "EXP-004-replay-ingest",
+  "objective": "Verify replay ingestion of pre-recorded raw observations and provenance preservation.",
+  "procedure": [
+    "Load pre-recorded raw observations from JSONL file.",
+    "Run pipeline using ReplaySource.",
+    "Verify normalization, provenance tagging (ingested_via='replay'), and evidence collection."
+  ],
+  "configuration": {
+    "associate_context": true
+  },
+  "input": {
+    "type": "replay",
+    "path": "experiments/data/sample_raw.jsonl",
+    "expected_session_id": "00000000-0000-4000-8000-000000000001"
+  },
+  "expected_observation": {
+    "status": "SUCCESS_WITH_DATA",
+    "raw_count": 2,
+    "normalized_count": 2
+  },
+  "limitations": [
+    "Replays static file observations without live system interaction."
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "keylogix.experiment.v1",
+  "experiment_id": "EXP-001-synthetic-pipeline",
+  "objective": "Validate baseline synthetic observation, normalization, classification, and analysis pipeline with synthetic input.",
+  "procedure": [
+    "Initialize synthetic observation source with standard text sequence 'Hello World'.",
+    "Run pipeline with context association enabled.",
+    "Verify normalization to KEY_DOWN / KEY_UP pairs.",
+    "Verify classification as text_oriented sequence.",
+    "Verify artifact persistence and evidence collection."
+  ],
+  "configuration": {
+    "associate_context": true
+  },
+  "input": {
+    "type": "synthetic",
+    "default_application": "notepad.exe",
+    "default_window": "Untitled - Notepad",
+    "script": [
+      { "action": "key", "key_code": 72, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 72, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 69, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 69, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 76, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 76, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 76, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 76, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 79, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 79, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 32, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 32, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 87, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 87, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 79, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 79, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 82, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 82, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 76, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 76, "event_type": "KEY_UP" },
+      { "action": "key", "key_code": 68, "event_type": "KEY_DOWN" },
+      { "action": "key", "key_code": 68, "event_type": "KEY_UP" }
+    ]
+  },
+  "expected_observation": {
+    "status": "SUCCESS_WITH_DATA",
+    "raw_count": 22,
+    "normalized_count": 22,
+    "sequence_label": "text_oriented"
+  },
+  "limitations": [
+    "Synthetic execution on analysis host; does not execute Win32 hooks.",
+    "Virtual key labels name keys, not layout-dependent typed characters.",
+    "Security product telemetry is not measured on this host."
+  ]
+}
